@@ -54,7 +54,8 @@ export default function CTF({ data }) {
   const root = d3.hierarchy(treeData);
 
   d3.tree()
-    .size([height - 100, width - 300])(root);
+    .nodeSize([80, 100])          // [vertical spacing antar node, horizontal jarak antar level]
+    .separation((a, b) => a.parent === b.parent ? 1 : 1.2)(root);
 
   const nodes = root.descendants();
   const links = root.links();
@@ -81,6 +82,9 @@ export default function CTF({ data }) {
 
   }, []);
 
+  const offsetX = 80;   // margin kiri
+  const offsetY = height / 2; 
+
   return (
     <svg className="w-screen h-screen"
       ref={svgRef}
@@ -92,7 +96,7 @@ export default function CTF({ data }) {
       }}
     >
 
-      <g className="main">
+      <g className="main" transform={`translate(${offsetX},${offsetY})`}>
 
         {links.map((link,i)=>(
           <path
