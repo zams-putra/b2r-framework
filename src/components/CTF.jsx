@@ -1,12 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import Panel from "./Panel";
 
 export default function CTF({ data }) {
+
+
+  const [selectedNode, setSelectedNode] = useState(null)
+  const handleNodeCLick = (nodeData) => {
+    if(nodeData.children || nodeData._children) {
+      toggleNode(nodeData)
+    } else if (nodeData.content) {
+      setSelectedNode(nodeData)
+    }
+  }
+  
+  
   const svgRef = useRef();
 
   const [treeData, setTreeData] = useState(() => {
     const clone = structuredClone(data);
+
+    let count = 0
+    function assignId(node) {
+      node.id = count++
+      node.children?.forEach(assignId)
+    }
+    assignId(clone)
+    
 
     function collapse(node) {
       if (node.children) {
@@ -30,7 +51,7 @@ export default function CTF({ data }) {
 
   const toggleNode = (target) => {
     function traverse(node) {
-      if (node.name === target.name) {
+      if (node.id === target.id) {
         if (node.children) {
           node._children = node.children;
           node.children = null;
@@ -82,71 +103,61 @@ export default function CTF({ data }) {
 
   }, []);
 
-  const offsetX = 80;   // margin kiri
+  const offsetX = 100;   // margin kiri
   const offsetY = height / 2; 
 
   return (
-    <svg className="w-screen h-screen"
+    <div className="relative">
+
+      <svg className="w-screen h-screen"
       ref={svgRef}
       width={width}
       height={height}
       style={{
-        background:"#000000",
+        background:"#222831",
         cursor:"grab"
       }}
     >
 
-      <g className="main" transform={`translate(${offsetX},${offsetY})`}>
+     <g className="main" transform={`translate(${offsetX},${offsetY})`}>
 
-        {links.map((link,i)=>(
-          <path
-            key={i}
-            d={linkGenerator(link)}
-            fill="none"
-            stroke="#444"
-          />
-        ))}
+      {links.map((link, i) => (
+        <path key={i} d={linkGenerator(link)} fill="none" stroke="#444" />
+      ))}
 
-        {nodes.map((node,i)=>(
-
+      <AnimatePresence mode="sync">
+        {nodes.map((node) => (
           <motion.g
-            key={i}
+            key={node.data.id} 
             transform={`translate(${node.y},${node.x})`}
-            style={{
-              cursor:"pointer"
-            }}
-            initial={{opacity:0}}
-            animate={{opacity:1}}
-            exit={{opacity:0}}
-            transition={{duration: 1.2}}
-            onClick={()=>toggleNode(node.data)}
+            style={{ cursor: "pointer" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            onClick={() => handleNodeCLick(node.data)}
           >
-
-            <circle
-              r={12}
-              fill={
-                node.data._children
-                ? "#22c55e"
-                : "#ddd"
-              }
-            />
-
+            <circle r={12} fill={node.data._children ? "#EEEEEE" : "#00ADB5"} />
             <text
               fill="white"
-              x={20}
-              y={4}
-              fontSize={13}
+              x={0}
+              y={28}
+              fontSize={12}
               fontFamily="monospace"
+              textAnchor="middle"
             >
               {node.data.name}
             </text>
-
           </motion.g>
-
         ))}
+      </AnimatePresence>
 
-      </g>
+    </g>
+      </svg>
 
-    </svg>
+
+      <Panel node={selectedNode} onClose={() => setSelectedNode(null)}/>
+      
+    </div>
   );
 }
