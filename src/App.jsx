@@ -1,4 +1,5 @@
 import CTF from "./components/CTF"
+import Pala from "./components/Pala"
 import { data } from "./data/data"
 
 function App() {
@@ -6,7 +7,10 @@ function App() {
 
   return (
 
-      <CTF data={data}/>
+      <main>
+        <Pala/>
+        <CTF data={data}/>
+      </main>
 
   )
 }
