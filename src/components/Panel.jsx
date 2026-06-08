@@ -16,9 +16,9 @@ function CopyButton({ text }) {
       className="shrink-0 text-xs px-2 py-1 rounded transition-all duration-200"
       style={{
         fontFamily: "monospace",
-        background: copied ? "#22c55e22" : "#ffffff0f",
-        color: copied ? "#22c55e" : "#666",
-        border: `1px solid ${copied ? "#22c55e44" : "#333"}`,
+        background: copied ? "#00ADB5" : "#ffffff0f",
+        color: copied ? "#00ADB" : "#666",
+        border: `1px solid ${copied ? "00ADB5" : "#333"}`,
       }}
     >
       {copied ? "copied" : "copy"}
@@ -57,7 +57,7 @@ function PanelContent({ node, onClose }) {
         className="fixed z-50 overflow-y-auto bottom-0 left-0 right-0 h-[80vh] md:top-0 md:right-0 md:bottom-0 md:left-auto md:h-full md:w-1/4 md:min-w-[320px]"
         style={{
           fontFamily: "monospace",
-          background: "#0a0a0a",
+          background: "#101317",
           borderLeft: "1px solid #1f1f1f",
           borderTop: "1px solid #1f1f1f",
         }}
@@ -76,11 +76,11 @@ function PanelContent({ node, onClose }) {
         >
           <div className="flex items-center gap-3">
             <span
-              className="text-xs px-2 py-0.5 rounded"
+              className="text-xs px-2 py-0.5 rounded font-semibold"
               style={{
-                background: "#22c55e18",
-                color: "#22c55e",
-                border: "1px solid #22c55e33",
+                background: "#00ADB5",
+                color: "black",
+                border: "1px solid #00ADB5",
               }}
             >
               NODE
@@ -127,13 +127,13 @@ function PanelContent({ node, onClose }) {
           {/* Commands */}
           {content.commands?.length > 0 && (
             <div className="flex flex-col gap-3">
-              <span className="text-xs tracking-widest uppercase" style={{ color: "#444" }}>
+              <span className="text-xs tracking-widest uppercase" style={{ color: "#888" }}>
                 — commands
               </span>
 
               {content.commands.map((item, i) => (
                 <div key={i} className="flex flex-col gap-1.5">
-                  <span className="text-xs" style={{ color: "#22c55e99" }}>
+                  <span className="text-xs" style={{ color: "#00ADB5" }}>
                     {item.label}
                   </span>
                   <div
@@ -157,10 +157,10 @@ function PanelContent({ node, onClose }) {
           {content.notes && (
             <div
               className="flex gap-3 rounded p-3"
-              style={{ background: "#0d1a0d", border: "1px solid #1a2e1a" }}
+              style={{ background: "black", border: "1px solid #00ADB5" }}
             >
-              <span style={{ color: "#22c55e", fontSize: 12 }}>›</span>
-              <p className="text-xs leading-relaxed" style={{ color: "#4a7a4a" }}>
+              <span style={{ color: "#00ADB5", fontSize: 12 }}>›</span>
+              <p className="text-xs leading-relaxed" style={{ color: "#c8c8c8" }}>
                 {content.notes}
               </p>
             </div>
