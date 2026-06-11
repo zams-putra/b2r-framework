@@ -96,9 +96,13 @@ export const data = {
                         label: "MSF search",
                         cmd: "msfconsole\nsearch [nama_app] [versi]",
                       },
+                      {
+                        label: "Public POC",
+                        cmd: "cari aja disini lalu ctrl + f cari CVE berapa sesuai tahun: https://github.com/ycdxsb/PocOrExp_in_Github",
+                      }
                     ],
                     notes:
-                      "Cek versi di source code browser (Ctrl+U), lalu cari di Google / ExploitDB / GitHub dengan keyword: [nama_app] [versi] exploit",
+                      "Cek versi di source code browser (Ctrl+U), lalu cari di Google / ExploitDB / GitHub dengan keyword: [nama_app] [versi] exploit, atau kalau mau jadi script kiddie sepertiku bisa langsung pakai public POC di opsi 3",
                   },
                 },
               ],
